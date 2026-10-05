@@ -1,0 +1,17 @@
+{
+  "source_path": "/Users/tranhaibang/Downloads/GENKI FAMI - CS GIÁ - Mẫu BÁO GIÁ.pdf",
+  "source_sha256": "c64c9d5a4258a9648ea7c65df304f41ebb831ba4873f111b9ef036e2f5fab9ad",
+  "source_pages": 4,
+  "source_date": "2025-01-10",
+  "quote_validity_days": 90,
+  "record_count": 46,
+  "main_product_count": 8,
+  "reference_product_count": 38,
+  "status": "PROVISIONAL_REFERENCE",
+  "verified": "Text extraction and visual review of all 4 pages; exact quote discount-to-dealer reconciliation 46/46",
+  "not_verified": "Current prices/tax rates, official JAN identity, validity extension, AMIS mapping and historical bonus values",
+  "jan_checksum_failures": [
+    "4580814751248"
+  ],
+  "activation": "Not activated; requires effective dates and approved mapping. User authorized provisional use only."
+}

@@ -1,0 +1,28 @@
+{
+  "name": "sales-bonus",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "npm run build && node --test dist/tests/*.test.js",
+    "test:unit": "npm run build && node --test dist/tests/domain.test.js",
+    "test:migrations": "npm run build && node --test dist/tests/migrations.test.js",
+    "validate:reference": "python3 scripts/validate_reference_prices.py",
+    "resume:build": "node scripts/resume-build.mjs",
+    "check": "npm run lint && npm run typecheck && npm test && npm run validate:reference",
+    "lint": "eslint packages tests scripts/*.mjs eslint.config.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.8",
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^26.6.4",
+    "eslint": "^10.12.0",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "version": "USER_DECISIONS_2026_10_05_V1",
+  "status": "APPROVED_DIRECTIONS_NOT_A_COMPLETE_PRODUCTION_POLICY",
+  "currency": "VND",
+  "revenueBasis": "EXCLUDING_VAT",
+  "revenueBasisConfigurable": true,
+  "negativeResidualIncentive": "ZERO_WITH_REASON",
+  "discountAbovePool": "WARNING",
+  "expenseAndAdjustmentApproverRoles": ["EXECUTIVE", "ADMIN"],
+  "supportDistribution": { "strategy": "FIXED_PERCENT", "MKT": "0.60", "ACCOUNTING": "0.20", "LOGISTICS": "0.20" },
+  "bonusRounding": { "mode": "CEILING", "quantumVnd": "1000", "stage": "FINAL_PERSON_OR_DEPARTMENT_TOTAL", "showDelta": true },
+  "postLockRefund": "APPROVED_CLAWBACK_OF_BONUS_RECEIVED_WITH_WARNING",
+  "missingContexts": ["AMIS_AUTHORITATIVE_DISCOUNT", "POOL_LIST_VALUE_VAT_BASIS", "PRICE_EFFECTIVE_DATES", "REFUND_OFFSET_DETAILS", "BONUS_POLICY_EFFECTIVE_DATE", "EXPENSE_RECOGNITION_TIMING", "CASH_VAT_ALLOCATION", "HISTORICAL_GOLDEN_DATASET"]
+}
