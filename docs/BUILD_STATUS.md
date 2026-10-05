@@ -2,6 +2,10 @@
 
 **LOCAL APPLICATION COMPLETE; EXTERNAL PRODUCTION GATES OPEN.** Latest user authorized autonomous build, test and self-review. Workspace `/Users/tranhaibang/.gemini/antigravity-ide/scratch/xtools/sales-bonus`.
 
+## Latest user guide checkpoint · 2026-10-06
+
+Added first-Admin setup sequence, a nine-topic ordered sidebar guide, and page-aware help on each operating page. The selected topic is addressable in the hash route and links back to its function. Usability E2E covered all nine help mappings/topics and mobile navigation. A real 375px overflow was found in the long next-topic control and fixed; desktop/mobile screenshots were reviewed. Browser E2E passed after the fix; `npm run lint`, build, full `npm run check` (27/27) and `git diff --check` passed. This guide checkpoint is part of the current application source; use Git history for its commit.
+
 ## Implemented
 
 apps/server: persisted PGlite/PostgreSQL, session authentication, server RBAC, explicit immutable configuration, versioned prices and product/group/global policies, manual finalized orders, target versions, cash-conserving receipts/confirm/manual allocation/reversal, expense approval/refusal, exact period calculations, chronological review/lock/pay, immutable history, reviewed post-lock refund recovery/offset, audit and authenticated backup.

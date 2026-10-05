@@ -25,6 +25,10 @@ Synthetic fixture, not historical business data:
 
 Chrome E2E: first Admin setup, explicit financial configuration, manual order creation, non-submit form controls, draft receipt confirmation, explanation, review/lock/pay, all9 navigation pages, product groups/policy, backup download and desktop/mobile layouts including order modal and session invalidation returning to login. Browser page errors absent; expected401 responses are verified in the expired-session scenario. Screenshots inspected at `tmp/qa-dashboard-desktop.png` and `tmp/qa-dashboard-mobile.png` (synthetic QA data).
 
+## User guide usability
+
+The first Admin screen now gives a short setup order. The in-app sidebar opens nine numbered guides in working order; every operating page has a context button that opens its matching guide, and each guide links back to its related page. Direct guide URLs preserve the selected topic. The browser E2E visited all nine help contexts, all nine sidebar topics, refreshed a deep link, and used contextual help on desktop and mobile. Review at 375px first found horizontal overflow from a long next-topic button; the mobile button now wraps and fills its row. Desktop and mobile guide screenshots were visually inspected, and the guide page hides its redundant floating help button so it cannot cover instructions.
+
 ## Issues found and fixed
 
 - PostgreSQL DATE values were converted with JavaScript locale strings: normalized by SQL type to YYYY-MM-DD.

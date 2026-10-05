@@ -19,6 +19,8 @@ test("Vietnamese desktop/mobile workflows from first setup through settlement", 
     return response.json();
   }
   await page.goto("/");
+  await expect(page.getByText("Trình tự lần đầu")).toBeVisible();
+  await expect(page.getByText(/Duyệt giá, tỷ lệ quỹ/)).toBeVisible();
   await page.getByLabel("Tên của bạn").fill("QA Admin");
   await page.getByLabel("Tên đăng nhập").fill("qa-admin");
   await page
@@ -113,7 +115,9 @@ test("Vietnamese desktop/mobile workflows from first setup through settlement", 
   await expect(
     page.locator(".metric-value").filter({ hasText: "1.225.000" }),
   ).toHaveCount(2);
-  await page.getByRole("button", { name: "Xem cách tính" }).click();
+  await page
+    .getByRole("button", { name: "Xem cách tính", exact: true })
+    .click();
   await expect(
     page.getByText("3.500.000", { exact: false }).first(),
   ).toBeVisible();
@@ -154,6 +158,57 @@ test("Vietnamese desktop/mobile workflows from first setup through settlement", 
       page.getByRole("button", { name: "Tải lại", exact: true }),
     ).toHaveCount(0);
   }
+  const contextualGuides = [
+    ["overview", "Tổng quan", "Bắt đầu và quy trình làm việc"],
+    ["orders", "Đơn hàng", "Đơn hàng"],
+    ["collections", "Đối soát thu tiền", "Đối soát thu tiền"],
+    ["bonus", "Tính thưởng", "Tính thưởng và xem cách tính"],
+    ["reports", "Báo cáo", "Đối soát, khóa kỳ và chi trả"],
+    ["staff", "Nhân sự", "Nhân sự và chỉ tiêu"],
+    ["policies", "Chính sách thưởng", "Giá sản phẩm và chính sách thưởng"],
+    ["integration", "Kết nối AMIS CRM", "Kết nối AMIS CRM"],
+    ["system", "Hệ thống", "Cấu hình, hoàn tiền, nhật ký và sao lưu"],
+  ];
+  for (const [key, pageLabel, guideTitle] of contextualGuides) {
+    await page.locator(`.sidebar button[data-page="${key}"]`).click();
+    await page.locator(".context-help").click();
+    await expect(page.locator(".content h1")).toHaveText(guideTitle);
+    await page
+      .locator(".guide-article")
+      .getByRole("button", { name: "Mở chức năng liên quan" })
+      .click();
+    await expect(
+      page.locator(`.sidebar button[data-page="${key}"]`),
+    ).toHaveClass(/active/);
+    await expect(
+      page.locator(`.sidebar button[data-page="${key}"]`),
+    ).toContainText(pageLabel);
+  }
+  await page.locator(".sidebar button[data-page=guide]").click();
+  await expect(page.locator(".guide-subnav .subnav-item")).toHaveCount(9);
+  await expect(page.locator(".context-help")).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBeTruthy();
+  await page.screenshot({ path: "tmp/qa-guide-desktop.png", fullPage: true });
+  for (const [key, guideTitle] of [
+    ["overview", "Bắt đầu và quy trình làm việc"],
+    ["system", "Cấu hình, hoàn tiền, nhật ký và sao lưu"],
+    ["policies", "Giá sản phẩm và chính sách thưởng"],
+    ["staff", "Nhân sự và chỉ tiêu"],
+    ["orders", "Đơn hàng"],
+    ["collections", "Đối soát thu tiền"],
+    ["bonus", "Tính thưởng và xem cách tính"],
+    ["reports", "Đối soát, khóa kỳ và chi trả"],
+    ["integration", "Kết nối AMIS CRM"],
+  ]) {
+    await page.locator(`.guide-subnav button[data-guide="${key}"]`).click();
+    await expect(page.locator(".content h1")).toHaveText(guideTitle);
+  }
+  await page.reload();
+  await expect(page.locator(".content h1")).toHaveText("Kết nối AMIS CRM");
   await page
     .locator(".sidebar")
     .getByRole("button", { name: "Chính sách thưởng", exact: true })
@@ -203,13 +258,38 @@ test("Vietnamese desktop/mobile workflows from first setup through settlement", 
       () => document.documentElement.scrollWidth <= window.innerWidth,
     ),
   ).toBeTruthy();
+  expect(
+    await page.locator(".sidebar").evaluate((node) =>
+      node.classList.contains("open"),
+    ),
+  ).toBe(false);
+  await page.locator(".context-help").click();
+  await expect(page.locator(".content h1")).toHaveText(
+    "Bắt đầu và quy trình làm việc",
+  );
+  await expect(page.locator(".context-help")).toHaveCount(0);
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= window.innerWidth,
+    ),
+  ).toBeTruthy();
+  await page.screenshot({ path: "tmp/qa-guide-mobile.png", fullPage: true });
   await page.getByLabel("Mở menu").click();
   await expect(
-    page.getByRole("button", { name: "Tính thưởng", exact: true }),
+    page.locator('.guide-subnav button[data-guide="overview"]'),
   ).toBeVisible();
+  await page.locator('.guide-subnav button[data-guide="integration"]').click();
+  await expect(page.locator(".content h1")).toHaveText("Kết nối AMIS CRM");
+  await page.getByLabel("Mở menu").click();
   await page
     .locator(".sidebar")
     .getByRole("button", { name: "Đơn hàng", exact: true })
+    .click();
+  await page.locator(".context-help").click();
+  await expect(page.locator(".content h1")).toHaveText("Đơn hàng");
+  await page
+    .locator(".guide-article")
+    .getByRole("button", { name: "Mở chức năng liên quan" })
     .click();
   await page
     .locator(".toolbar")

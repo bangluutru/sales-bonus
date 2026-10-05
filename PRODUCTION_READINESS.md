@@ -19,7 +19,7 @@ The manual-entry application is implemented, runs locally and passes the checks 
 | Local security | Salted scrypt hashes, hashed expiring sessions, HttpOnly/SameSite cookies, same-origin POST guard, loopback bind/Host restriction, CSP, escaped UI, JSON bounds, login throttling; audit excludes passwords |
 | Persisted database/migrations | Clean migration001+002, reopening persistent database, immutable financial/configuration guards tested in real PGlite PostgreSQL |
 | Backup/restore | Authenticated audited gzip backup, CLI restore into fresh directory, existing-directory refusal, restored data equality and session invalidation tested |
-| UI/E2E | Vietnamese accounting workflow, 9 pages, calculation explanation, price/policy/group management, desktop/mobile screenshots and no horizontal overflow, including mobile order dialog |
+| UI/E2E | Vietnamese accounting workflow, 9 pages, in-app sequential 9-topic guide with context-sensitive help, calculation explanation, price/policy/group management, desktop/mobile review and no horizontal overflow, including mobile guide and order dialog |
 | Automated checks | 27/27 domain/SQL/HTTP tests; Chrome E2E passes; lint/typecheck/build and 46 source-price checks pass; npm audit reports 0 vulnerabilities |
 | Live AMIS discovery/sync/webhooks | **Missing external input**: tenant credentials, redacted payloads, authoritative identities/price/discount/owner and auth/webhook contract; not connected or claimed tested |
 | Historical Golden Dataset | **Missing workbook**: sheets2603–2609; zero historical cases approved. Independent synthetic oracle is clearly labelled |

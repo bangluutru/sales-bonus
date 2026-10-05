@@ -31,6 +31,10 @@ Phần chia Support hiện dừng tại ba bộ phận, đúng phạm vi đã ch
 
 Làm tròn một lần tại tổng phải trả từng người/bộ phận **sau chỉ tiêu và điều chỉnh**; giữ riêng số chưa làm tròn và chênh lệch. Không làm tròn từng dòng đơn/khoản thu lên 1.000 đồng. Kỳ cũ hiển thị cấu hình đã khóa.
 
+## Hướng dẫn ngay trong ứng dụng
+
+Ở màn hình tạo Admin lần đầu có sẵn trình tự khởi động. Sau khi đăng nhập, mở **Hướng dẫn sử dụng** ở sidebar để xem 9 bài theo thứ tự: bắt đầu, cấu hình, chính sách và giá, nhân sự, đơn hàng, thu tiền, tính thưởng, khóa kỳ, rồi AMIS. Trong các trang nghiệp vụ, nút **Hướng dẫn: …** ở góc dưới mở đúng bài tương ứng. Từ bài hướng dẫn, chọn **Mở chức năng liên quan** để quay lại trang thao tác.
+
 ## Kiểm thử và tự review
 
 ```sh
@@ -39,7 +43,7 @@ npm run test:e2e
 npm audit
 ```
 
-27 kiểm thử domain, PostgreSQL và HTTP; một luồng E2E Chrome bao phủ thiết lập ban đầu đến chi trả, 9 trang, nhóm sản phẩm, sao lưu, desktop/mobile và form đơn trên mobile. E2E mặc định dùng Google Chrome tại đường dẫn macOS trong `playwright.config.mjs`. Xem [báo cáo tự review](docs/self-review.md) và [trạng thái production](PRODUCTION_READINESS.md).
+27 kiểm thử domain, PostgreSQL và HTTP; một luồng E2E Chrome bao phủ thiết lập ban đầu đến chi trả, 9 trang nghiệp vụ, cả 9 bài hướng dẫn và liên kết ngữ cảnh, nhóm sản phẩm, sao lưu, desktop/mobile và form đơn trên mobile. E2E mặc định dùng Google Chrome tại đường dẫn macOS trong `playwright.config.mjs`. Xem [báo cáo tự review](docs/self-review.md) và [trạng thái production](PRODUCTION_READINESS.md).
 
 ## Sao lưu và khôi phục
 

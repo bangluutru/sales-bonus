@@ -16,6 +16,7 @@ const icons = {
   warning: '<path d="m12 3 10 17H2zM12 9v4M12 16h.01"/>',
   check: '<path d="m5 12 4 4L19 6"/>',
   box: '<path d="m12 3 9 5v9l-9 5-9-5V8zM3 8l9 5 9-5M12 13v9"/>',
+  help: '<circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 1 1 4.2 1.8c-1 .9-1.8 1.2-1.8 2.7M12 17h.01"/>',
 };
 const icon = (key) =>
   `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icons[key] || icons.grid}</svg>`;
@@ -102,8 +103,165 @@ const nav = [
   ["integration", "Kết nối AMIS CRM", "link"],
   ["system", "Hệ thống", "settings"],
 ];
+const guideTopics = {
+  overview: {
+    title: "Bắt đầu và quy trình làm việc",
+    summary: "Đi theo đúng thứ tự để dữ liệu đơn hàng, dòng tiền và thưởng có căn cứ trước khi chốt kỳ.",
+    steps: [
+      ["Tạo tài khoản quản trị", "Lần đầu mở ứng dụng, nhập tên, tên đăng nhập và mật khẩu tối thiểu 12 ký tự. Đây là tài khoản đầu tiên; hãy giữ thông tin đăng nhập an toàn."],
+      ["Thiết lập quy tắc và giá", "Trong Hệ thống, chọn quy tắc tài chính. Trong Chính sách thưởng, duyệt giá có hiệu lực, tỷ lệ quỹ và tỷ lệ chia. Giá từ báo giá PDF cũ đang là tạm tính."],
+      ["Thêm đội ngũ, kỳ và chỉ tiêu", "Khai báo PM, tạo kỳ với ngày kết thúc không bao gồm ngày đó, rồi nhập chỉ tiêu thu tiền cho từng PM. Ví dụ kỳ tháng 10 kết thúc ngày 01/11."],
+      ["Ghi đơn và đối soát tiền", "Tạo đơn đã có giá và chính sách hợp lệ. Kế toán ghi nhận từng khoản tiền thực thu, rồi xác nhận khoản thu sau khi đối chiếu chứng từ."],
+      ["Kiểm tra thưởng rồi chốt kỳ", "Mở Tính thưởng để xem kết quả và từng dòng giải thích. Duyệt chi phí/điều chỉnh đang chờ, chuyển kỳ sang đối soát, khóa snapshot, sau đó ghi nhận chứng từ chi trả."],
+    ],
+    caution: "Các thao tác nhập đơn, xác nhận thu, duyệt, khóa và chi trả có ý nghĩa tài chính. Kiểm tra ngày, số tiền, sản phẩm, PM và chứng từ trước khi lưu.",
+    next: "orders",
+    page: "overview",
+  },
+  orders: {
+    title: "Đơn hàng",
+    summary: "Ghi nhận giá bán thực tế và người phụ trách. Đơn được chốt tại lúc tạo để lưu căn cứ giá và chính sách.",
+    steps: [
+      ["Kiểm tra điều kiện trước khi tạo", "Đảm bảo hệ thống đã có cấu hình, kỳ đang mở, PM đã được khai báo, đồng thời sản phẩm có giá đã duyệt và chính sách quỹ hiệu lực đúng ngày đơn."],
+      ["Mở Đơn hàng → Tạo đơn hàng", "Nhập số đơn duy nhất, ngày giao dịch, khách hàng và PM phụ trách. Chọn từng sản phẩm, số lượng và chiết khấu thực tế."],
+      ["Nhập chiết khấu đúng đơn vị", "Trường chiết khấu là tổng tiền chiết khấu gồm VAT cho dòng sản phẩm. Không lấy một mức chiết khấu mẫu từ báo giá làm mặc định."],
+      ["Rà soát rồi lưu", "Kiểm tra lại sản phẩm, số lượng, PM và ngày. Sau khi tạo, đơn lưu snapshot giá/chính sách; đơn cũ không đổi khi bạn tạo phiên bản giá mới."],
+      ["Theo dõi khoản còn phải thu", "Mở Chi tiết để xem giá trị thu gồm VAT, khoản đã thu xác nhận, số còn phải thu, dòng sản phẩm, chính sách snapshot và chi phí."],
+    ],
+    caution: "Nếu giá đang mang trạng thái “Giá tạm tính”, yêu cầu người có quyền duyệt giá hiện hành trong Chính sách thưởng trước khi tạo đơn.",
+    next: "collections",
+    page: "orders",
+  },
+  collections: {
+    title: "Đối soát thu tiền",
+    summary: "Ghi nhận tiền khách thực trả và chỉ đưa khoản đã đối chiếu, xác nhận vào doanh số tính thưởng.",
+    steps: [
+      ["Mở đơn cần thu", "Trong Đối soát thu tiền, tìm đơn theo số đơn, khách hàng hoặc PM rồi chọn Chi tiết → Ghi nhận thu."],
+      ["Tạo khoản thu nháp", "Nhập số tiền thực nhận gồm VAT, ngày nhận, phương thức và mã tham chiếu duy nhất. Thêm số chứng từ hoặc ghi chú để người khác đối chiếu."],
+      ["Đối chiếu trước khi xác nhận", "Mở lại chi tiết đơn. So số tiền với sao kê/phiếu thu và kiểm tra phân bổ. Nháp chưa được tính thưởng."],
+      ["Xác nhận khoản thu", "Chọn Xác nhận nếu phân bổ theo tỷ lệ giá trị đơn phù hợp. Nếu cần tự phân bổ theo từng sản phẩm, chọn Phân bổ, nhập số tiền từng dòng sao cho tổng bằng khoản thu rồi ghi lý do."],
+      ["Sửa sai bằng đảo có lý do", "Khoản đã xác nhận có thể được đảo nếu kỳ gốc còn mở; nhập ngày và lý do. Với sai sót thuộc kỳ đã đóng, dùng quy trình điều chỉnh hoàn tiền trong Hệ thống."],
+    ],
+    caution: "Một đơn có thể được thu nhiều lần. Không xác nhận khoản thu chỉ dựa trên nháp; khoản thu trùng hoặc vượt số phải thu sẽ bị từ chối.",
+    next: "bonus",
+    page: "collections",
+  },
+  bonus: {
+    title: "Tính thưởng và xem cách tính",
+    summary: "Kiểm tra doanh số, điều kiện chỉ tiêu, số thưởng tính được và nguồn của từng con số trước khi chuyển kỳ.",
+    steps: [
+      ["Chọn đúng kỳ", "Dùng danh sách kỳ ở đầu trang và kiểm tra trạng thái kỳ. Kết quả kỳ cũ dùng cấu hình và snapshot đã lưu cho kỳ đó."],
+      ["Kiểm tra doanh số được tính", "Doanh số theo quy tắc đã cấu hình; mặc định đã chốt là trước VAT. Tiền thu vẫn nhập theo số thực nhận gồm VAT và được chuẩn hóa theo quy tắc kỳ."],
+      ["So chỉ tiêu và các mức thưởng", "Đối chiếu tiền thu theo PM với chỉ tiêu. Màn hình giữ số thưởng kiếm được để giải thích; nếu không đạt chỉ tiêu, số phải trả tuân theo kết quả đủ điều kiện."],
+      ["Mở Xem cách tính ở từng dòng", "Đọc giá niêm yết, chiết khấu, giá trị thu, tỷ lệ và phiên bản quỹ, quỹ còn lại, thu kỳ này, số tính cho PM/Support/công ty và dữ liệu snapshot."],
+      ["Xử lý cảnh báo trước khi duyệt", "Kiểm tra quỹ âm, chiết khấu vượt quỹ, chỉ tiêu còn thiếu, chi phí/điều chỉnh chờ duyệt. Quỹ âm được giữ nguyên để truy vết nhưng thưởng PM và Support bằng 0."],
+    ],
+    caution: "Làm tròn lên 1.000 đồng áp dụng một lần trên tổng phải trả ròng của mỗi người/bộ phận sau chỉ tiêu và điều chỉnh. Chênh lệch làm tròn hiển thị riêng.",
+    next: "reports",
+    page: "bonus",
+  },
+  reports: {
+    title: "Đối soát, khóa kỳ và chi trả",
+    summary: "Chốt theo thứ tự để tạo hồ sơ kỳ bất biến có thể kiểm toán lại.",
+    steps: [
+      ["Rà soát báo cáo của kỳ", "Chọn Báo cáo và đúng kỳ. Kiểm tra tiền thu đã xác nhận, chỉ tiêu từng PM, cảnh báo, chi phí và khoản điều chỉnh."],
+      ["Hoàn tất các hồ sơ đang chờ", "Giám đốc/Admin cần duyệt hoặc từ chối đề nghị chi phí và điều chỉnh. Bổ sung chỉ tiêu PM có hoạt động; xử lý khoản thu hồi vượt tiền thưởng kỳ."],
+      ["Chuyển từ Đang mở sang Đang đối soát", "Khi số liệu trong kỳ đã đủ, chọn Chuyển sang đối soát. Kỳ REVIEW ngừng nhận giao dịch mới để chuẩn bị chốt."],
+      ["Kiểm tra lần cuối và khóa", "Đọc lại báo cáo, giải thích các dòng và cảnh báo quỹ âm/chiết khấu vượt quỹ. Chỉ đánh dấu xác nhận cảnh báo sau khi đã đối soát. Khóa sẽ lưu snapshot bất biến."],
+      ["Ghi nhận chi trả", "Sau khi chuyển sang Đã khóa, nhập mã tham chiếu phiếu chi/chứng từ và chọn Đánh dấu đã chi trả. Ứng dụng ghi nhận đối soát, không tự chuyển tiền ngân hàng."],
+      ["Xuất báo cáo khi cần", "Chọn Xuất báo cáo để tải JSON của kỳ với số chính xác và dấu vết tính toán; lưu cùng hồ sơ kỳ theo quy định nội bộ."],
+    ],
+    caution: "Không thể mở lại hoặc sửa snapshot đã khóa. Nếu phát hiện sai sau khóa, ghi nhận điều chỉnh mới có lý do, chứng từ và phê duyệt.",
+    next: "system",
+    page: "reports",
+  },
+  staff: {
+    title: "Nhân sự và chỉ tiêu",
+    summary: "Khai báo PM, tùy chọn tài khoản đăng nhập và gắn chỉ tiêu thu tiền theo từng kỳ.",
+    steps: [
+      ["Thêm nhân sự", "Chọn Thêm nhân sự, nhập họ tên và mã duy nhất. Có thể chỉ tạo hồ sơ nhân sự mà chưa cấp tài khoản."],
+      ["Cấp quyền khi cần đăng nhập", "Nếu tạo tài khoản, nhập tên đăng nhập, chọn đúng vai trò và đặt mật khẩu. Cấp quyền theo công việc thực tế; quyền được kiểm tra ở máy chủ."],
+      ["Giao chỉ tiêu cho PM", "Chọn Giao chỉ tiêu tại dòng PM, chọn kỳ đang mở và nhập chỉ tiêu theo cơ sở doanh số của kỳ. Chỉ tiêu cần có trước khi đưa kỳ vào đối soát."],
+      ["Rà lại kỳ trước khi chốt", "Chọn kỳ ở đầu trang để xem chỉ tiêu đúng kỳ. Nếu PM có doanh số nhưng chưa có chỉ tiêu, hoàn tất dữ liệu trước khi chuyển REVIEW."],
+    ],
+    caution: "MKT, Kế toán và Kho vận hiện chia quỹ Support theo 60:20:20. Chia tiếp quỹ từng bộ phận đến cá nhân chưa nằm trong phạm vi hiện tại.",
+    next: "policies",
+    page: "staff",
+  },
+  policies: {
+    title: "Giá sản phẩm và chính sách thưởng",
+    summary: "Thiết lập giá, VAT, tỷ lệ quỹ và tỷ lệ chia có ngày hiệu lực, lý do và phiên bản.",
+    steps: [
+      ["Duyệt giá sản phẩm", "Mở Thay đổi giá ở đúng sản phẩm. Xác nhận giá, quy cách, giá đã gồm hay chưa gồm VAT, thuế suất, ngày áp dụng và nguồn/lý do."],
+      ["Tạo nhóm sản phẩm nếu cần", "Chọn Nhóm sản phẩm, đặt tên và gán các SKU. Nhóm chỉ ảnh hưởng đến đơn tạo mới sau khi thay đổi."],
+      ["Tạo tỷ lệ quỹ quản lý", "Chọn phạm vi Toàn bộ sản phẩm, Một sản phẩm hoặc Nhóm sản phẩm. Nhập tỷ lệ, ngày hiệu lực và căn cứ; tạo phiên bản mới khi tỷ lệ đổi."],
+      ["Tạo tỷ lệ chia quỹ còn lại", "Nhập tỷ lệ PM, Support và Công ty sao cho tổng bằng 100%, cùng ngày hiệu lực và lý do. Support hiện được chia tiếp theo cấu hình bộ phận 60:20:20."],
+      ["Kiểm tra quy tắc áp dụng", "Nếu nhiều chính sách cùng hiệu lực, hệ thống ưu tiên Sản phẩm → Nhóm sản phẩm → Toàn bộ. Mỗi đơn lưu snapshot nên đổi chính sách không làm viết lại đơn cũ."],
+    ],
+    caution: "46 mức trong PDF ngày 10/01/2025 chỉ là nguồn tạm tính và báo giá đã cũ. Không dùng làm giá hiện hành trước khi người có quyền xác minh, duyệt ngày áp dụng và VAT.",
+    next: "staff",
+    page: "policies",
+  },
+  integration: {
+    title: "Kết nối AMIS CRM",
+    summary: "Trang này cho biết trạng thái và đầu vào còn thiếu; luồng nhập thủ công vẫn vận hành độc lập.",
+    steps: [
+      ["Đọc trạng thái hiện tại", "Trang đang hiển thị AMIS chưa kết nối. Đơn hàng trong ứng dụng hiện đến từ nhập thủ công."],
+      ["Chuẩn bị dữ liệu xác minh", "Cần tenant truy cập, tài liệu API chính thức, payload đã che dữ liệu nhạy cảm và xác nhận trường ID, sản phẩm, giá, VAT, chiết khấu, chủ đơn."],
+      ["Xác minh webhook và đối soát", "Trước khi tự động đồng bộ, cần biết cách xác thực chữ ký, retry, chống sự kiện trùng và so sánh dữ liệu nguồn với dữ liệu đã nhập."],
+      ["Tiếp tục làm việc thủ công", "Trong lúc chưa kết nối, tạo đơn và lưu chứng từ theo quy trình ở Đơn hàng và Đối soát thu tiền. Không nhập token hoặc bí mật AMIS vào trang này."],
+    ],
+    caution: "Không có kết nối thật hoặc dữ liệu lịch sử được tuyên bố tại đây. Chỉ đánh dấu tích hợp sau khi kiểm tra với tenant và nguồn nghiệp vụ thực tế.",
+    next: "orders",
+    page: "integration",
+  },
+  system: {
+    title: "Cấu hình, hoàn tiền, nhật ký và sao lưu",
+    summary: "Quản lý quy tắc áp dụng cho kỳ mới và xử lý các công việc sau khi kỳ đã khóa.",
+    steps: [
+      ["Lưu cấu hình tài chính", "Trong Cấu hình quy tắc, chọn cơ sở giá của quỹ, cơ sở doanh số, múi giờ, cách ghi nhận thu từng phần, ngày áp dụng chính sách, cách ghi nhận chi phí và tỷ lệ Support. Mặc định doanh số trước VAT, Support 60:20:20, làm tròn lên 1.000 đồng."],
+      ["Tạo kỳ", "Chọn Tạo kỳ, đặt mã duy nhất, ngày bắt đầu và ngày kết thúc không bao gồm. Tạo kỳ theo thứ tự thời gian và nhập chỉ tiêu tương ứng."],
+      ["Đề nghị thu hồi khi khách được hoàn tiền", "Mở Hoàn tiền sau khóa kỳ, chọn quyết toán đã chi trả, đơn liên quan, kỳ mở để cấn trừ, ngày và số tiền hoàn khách. Nhập riêng số thưởng đề nghị thu hồi, lý do và chứng từ."],
+      ["Duyệt hoặc điều chỉnh đề nghị", "Giám đốc/Admin kiểm tra chứng từ, có thể đổi số thưởng thu hồi hoặc kỳ áp dụng trước khi duyệt. Số tiền hoàn khách không tự động bằng số thưởng thu hồi."],
+      ["Tra nhật ký", "Bảng Nhật ký tài chính là lịch sử chỉ đọc theo quyền. Chọn Xem để kiểm tra chi tiết sự kiện và lý do."],
+      ["Tải bản sao lưu", "Admin chọn Sao lưu dữ liệu, lưu tệp .tar.gz ở vị trí riêng tư. Tệp chứa dữ liệu tài chính và thông tin xác thực đã băm. Khôi phục vào thư mục cơ sở dữ liệu mới bằng hướng dẫn trong README."],
+    ],
+    caution: "Cấu hình mới áp dụng cho kỳ tạo sau; kỳ cũ giữ nguyên snapshot. Khoản thu hồi chưa được duyệt sẽ cảnh báo và chặn chốt cho đến khi được xử lý.",
+    next: "reports",
+    page: "system",
+  },
+};
+const guideSequence = [
+  "overview",
+  "system",
+  "policies",
+  "staff",
+  "orders",
+  "collections",
+  "bonus",
+  "reports",
+  "integration",
+];
+guideTopics.overview.next = "system";
+guideTopics.staff.next = "orders";
+guideTopics.reports.next = "integration";
+guideTopics.integration.next = "overview";
+const helpTopicForPage = Object.fromEntries(
+  nav.map(([key]) => [key, key in guideTopics ? key : "overview"]),
+);
+function routeFromHash() {
+  const [routePage, routeTopic] = location.hash.slice(1).split("/");
+  if (routePage === "guide")
+    return {
+      page: "guide",
+      topic: routeTopic in guideTopics ? routeTopic : "overview",
+    };
+  return { page: nav.some(([key]) => key === routePage) ? routePage : "overview", topic: "overview" };
+}
+const initialRoute = routeFromHash();
 let state = null,
-  page = location.hash.slice(1) || "overview",
+  page = initialRoute.page,
+  guideTopic = initialRoute.topic,
   periodId = "",
   toastTimer;
 const root = document.querySelector("#app"),
@@ -181,7 +339,7 @@ function form(kind, content, label = "Lưu dữ liệu") {
   return `<form data-form="${kind}"><div class="form-grid">${content}</div><div class="form-error" role="alert"></div><div class="form-actions">${button("Hủy", "close")}<button class="btn primary" type="submit">${e(label)}</button></div></form>`;
 }
 function authScreen(setup) {
-  root.innerHTML = `<div class="auth"><div class="auth-brand"><div class="brand"><div class="brand-mark">G</div><div><strong>GENKI</strong><small>COMMISSION & BONUS</small></div></div><h1>Rõ dòng tiền.<br>Minh bạch từng<br>khoản thưởng.</h1><p>Một nơi để đối soát thu tiền, quản lý quỹ và theo dõi thưởng của đội ngũ.</p></div><div class="auth-form"><div class="auth-inner"><div class="eyebrow">QUẢN LÝ THƯỞNG</div><h2>${setup ? "Thiết lập hệ thống" : "Chào mừng trở lại"}</h2><p>${setup ? "Tạo tài khoản quản trị cho ứng dụng cục bộ. Sau đó thiết lập chính sách trước khi bắt đầu tính thưởng." : "Đăng nhập để tiếp tục công việc đối soát và quản lý thưởng."}</p><form data-form="${setup ? "setup" : "login"}">${setup ? field("name", "Tên của bạn") : ""}${field("login", "Tên đăng nhập", "", "text")}${field("password", "Mật khẩu", "", "password", setup ? "Tối thiểu 12 ký tự. Không có mật khẩu mặc định." : "")}<div class="form-error" role="alert"></div><button class="btn primary" type="submit">${setup ? "Tạo tài khoản quản trị" : "Đăng nhập"} ${icon("arrow")}</button></form><p class="help">Dữ liệu được lưu cục bộ trên máy. Kết nối AMIS chưa được thiết lập.</p></div></div></div>`;
+  root.innerHTML = `<div class="auth"><div class="auth-brand"><div class="brand"><div class="brand-mark">G</div><div><strong>GENKI</strong><small>COMMISSION & BONUS</small></div></div><h1>Rõ dòng tiền.<br>Minh bạch từng<br>khoản thưởng.</h1><p>Một nơi để đối soát thu tiền, quản lý quỹ và theo dõi thưởng của đội ngũ.</p></div><div class="auth-form"><div class="auth-inner"><div class="eyebrow">QUẢN LÝ THƯỞNG</div><h2>${setup ? "Thiết lập hệ thống" : "Chào mừng trở lại"}</h2><p>${setup ? "Tạo tài khoản quản trị đầu tiên để bắt đầu. Sau đó làm theo thứ tự cấu hình, duyệt giá, thêm đội ngũ và tạo kỳ." : "Đăng nhập để tiếp tục công việc đối soát và quản lý thưởng."}</p>${setup ? '<div class="auth-start"><strong>Trình tự lần đầu</strong><ol><li>Tạo tài khoản Admin với mật khẩu riêng.</li><li>Chọn quy tắc tài chính và múi giờ trong Hệ thống.</li><li>Duyệt giá, tỷ lệ quỹ và tỷ lệ chia trong Chính sách thưởng.</li><li>Thêm PM, tạo kỳ và giao chỉ tiêu trước khi nhập đơn.</li></ol><small>Sau khi đăng nhập, mở mục Hướng dẫn sử dụng để xem từng bước và nút trợ giúp của mỗi trang.</small></div>' : ""}<form data-form="${setup ? "setup" : "login"}">${setup ? field("name", "Tên của bạn") : ""}${field("login", "Tên đăng nhập", "", "text")}${field("password", "Mật khẩu", "", "password", setup ? "Tối thiểu 12 ký tự. Không có mật khẩu mặc định." : "")}<div class="form-error" role="alert"></div><button class="btn primary" type="submit">${setup ? "Tạo tài khoản quản trị" : "Đăng nhập"} ${icon("arrow")}</button></form><p class="help">Dữ liệu được lưu cục bộ trên máy. Kết nối AMIS chưa được thiết lập.</p></div></div></div>`;
 }
 async function start() {
   try {
@@ -214,6 +372,9 @@ async function refresh() {
 }
 function shell(body) {
   const active = nav.find((n) => n[0] === page) || nav[0];
+  const contextualTopic =
+    guideTopics[page === "guide" ? guideTopic : helpTopicForPage[page] || "overview"] ||
+    guideTopics.overview;
   root.innerHTML = `<aside class="sidebar"><div class="brand"><div class="brand-mark">G</div><div><strong>GENKI</strong><small>COMMISSION & BONUS</small></div></div><div class="nav-label">QUẢN LÝ KINH DOANH</div>${nav
     .slice(0, 7)
     .map(
@@ -228,7 +389,7 @@ function shell(body) {
     )
     .join(
       "",
-    )}<div class="sidebar-foot"><small><span class="connection-dot"></span>AMIS chưa kết nối</small><div class="help">Dữ liệu nhập thủ công · Giá có nguồn</div></div></aside><main class="main"><header class="topbar"><button class="mobile-menu" data-action="menu" aria-label="Mở menu">☰</button><div class="breadcrumb">Không gian làm việc <strong>/ &nbsp; ${e(active[1])}</strong></div><div class="top-right"><span class="local-pill">BẢN CỤC BỘ</span><div class="avatar">${e(state.user.name.slice(0, 2).toUpperCase())}</div><div class="profile">${e(state.user.name)}<small>${e(roleLabels[state.user.role])}</small></div>${button("Đăng xuất", "logout", "quiet small")}</div></header><div class="content">${body}<div class="footer-note"><span>GENKI · Quản lý thưởng theo dòng tiền</span><span>Giá có phiên bản · Lịch sử khóa kỳ được bảo toàn</span></div></div></main>`;
+    )}<div class="nav-label">HỌC CÁCH SỬ DỤNG</div><button class="nav-item ${page === "guide" ? "active" : ""}" data-page="guide">${icon("help")}Hướng dẫn sử dụng</button>${page === "guide" ? `<div class="guide-subnav" aria-label="Các bài hướng dẫn tuần tự">${guideSequence.map((key, index) => `<button class="subnav-item ${guideTopic === key ? "active" : ""}" data-guide="${e(key)}"><span>${String(index + 1).padStart(2, "0")}</span>${e(guideTopics[key].title)}</button>`).join("")}</div>` : ""}<div class="sidebar-foot"><small><span class="connection-dot"></span>AMIS chưa kết nối</small><div class="help">Dữ liệu nhập thủ công · Giá có nguồn</div></div></aside><main class="main"><header class="topbar"><button class="mobile-menu" data-action="menu" aria-label="Mở menu">☰</button><div class="breadcrumb">Không gian làm việc <strong>/ &nbsp; ${e(page === "guide" ? "Hướng dẫn sử dụng" : active[1])}</strong></div><div class="top-right"><span class="local-pill">BẢN CỤC BỘ</span><div class="avatar">${e(state.user.name.slice(0, 2).toUpperCase())}</div><div class="profile">${e(state.user.name)}<small>${e(roleLabels[state.user.role])}</small></div>${button("Đăng xuất", "logout", "quiet small")}</div></header><div class="content">${body}<div class="footer-note"><span>GENKI · Quản lý thưởng theo dòng tiền</span><span>Giá có phiên bản · Lịch sử khóa kỳ được bảo toàn</span></div></div>${page === "guide" ? "" : `<button class="context-help" data-action="context-help" aria-label="Mở hướng dẫn: ${e(contextualTopic.title)}">${icon("help")}<span>Hướng dẫn: ${e(contextualTopic.title)}</span></button>`}</main>`;
 }
 function heading(title, description, action = "") {
   return `<div class="page-heading"><div><div class="eyebrow">COMMISSION & BONUS</div><h1>${e(title)}</h1><p>${e(description)}</p></div><div class="toolbar">${state.periods.length ? `<select class="period-picker" id="period-picker" aria-label="Kỳ tính thưởng">${state.periods.map((p) => `<option value="${e(p.id)}" ${p.id === periodId ? "selected" : ""}>Kỳ ${e(p.id)} · ${e(stateLabels[p.state])}</option>`).join("")}</select>` : ""}${action}</div></div>`;
@@ -461,6 +622,13 @@ async function systemView() {
     `<div class="split">${panel("Kỳ tính thưởng", "OPEN → REVIEW → LOCKED → PAID", state.periods.length ? table(["Kỳ", "Khoảng thời gian", "Trạng thái"], state.periods.map((p) => `<tr><td>${e(p.id)}</td><td>${e(p.starts_on)} → ${e(p.ends_on)}</td><td>${badge(p.state)}</td></tr>`).join("")) : empty("Chưa tạo kỳ", "Cần cấu hình cơ sở tính trước."), can("ADMIN", "ACCOUNTING") ? button("Tạo kỳ", "period", "small") : "")}${panel("Quy tắc đang dùng", "Mỗi kỳ lưu snapshot cấu hình", `<div class="panel-body"><div class="kv"><span>Doanh số</span><strong>${state.configuration ? (state.configuration.revenueBasis === "EXCLUDING_VAT" ? "Trước VAT" : "Gồm VAT") : "Chưa cấu hình"}</strong></div><div class="kv"><span>Cơ sở quỹ</span><strong>${state.configuration ? (state.configuration.poolBasis === "EXCLUDING_VAT" ? "Giá trước VAT" : "Giá gồm VAT") : "Cần chọn"}</strong></div><div class="kv"><span>Làm tròn thưởng</span><strong>Lên ${money(state.configuration?.roundingQuantumVnd || "1000")} ₫</strong></div><div class="kv"><span>Phê duyệt chi phí / điều chỉnh</span><strong>Giám đốc / Admin</strong></div><div class="kv"><span>Múi giờ kế toán</span><strong>${e(state.configuration?.timezone || "Chưa chọn")}</strong></div></div>`)}</div><div class="section-stack">${panel("Điều chỉnh hoàn tiền sau khóa", "Cấn trừ thưởng đã nhận; cần Giám đốc/Admin duyệt", adjustments.length ? table(["Lý do", "Kỳ gốc → kỳ áp dụng", "Cấn trừ", "Trạng thái", ""], adjustments.map((a) => `<tr><td>${e(a.reason)}</td><td>${e(a.source_period_id)} → ${e(a.application_period_id)}</td><td class="amount">${money(a.amount)} ₫</td><td>${badge(a.status)}</td><td>${a.status === "PENDING" && can("ADMIN", "EXECUTIVE") ? button("Duyệt / Điều chỉnh", "approve-adjustment", "small", `data-id="${e(a.id)}" data-amount="${e(String(a.amount).replace("-", ""))}"`) + button("Từ chối", "reject-adjustment", "small", `data-id="${e(a.id)}"`) : ""}</td></tr>`).join("")) : empty("Chưa có điều chỉnh", "Lịch sử quyết toán đã khóa không bị sửa lại."), can("ADMIN", "ACCOUNTING") ? button("Ghi nhận hoàn tiền", "refund", "small") : "")}${panel("Nhật ký tài chính", "Chỉ đọc · 200 sự kiện gần nhất", audits.length ? table(["Thời gian", "Hành động", "Đối tượng", "Lý do", ""], audits.map((a) => `<tr><td>${e(String(a.occurred_at).slice(0, 19).replace("T", " "))}</td><td>${e(a.action)}</td><td>${e(a.entity_type)}<small>${e(a.entity_id.slice(0, 12))}</small></td><td>${e(a.reason || "—")}</td><td>${button("Xem", "audit-detail", "small", `data-id="${e(a.id)}"`)}</td></tr>`).join("")) : empty("Nhật ký được phân quyền", "PM và Support không có quyền xem nhật ký toàn công ty."))}</div>`
   );
 }
+function guideView() {
+  const current = guideTopics[guideTopic] || guideTopics.overview;
+  const index = guideSequence.indexOf(guideTopic) + 1;
+  const targetPage = nav.find(([key]) => key === current.page)?.[1] || "Tổng quan";
+  const nextTopic = guideTopics[current.next] || guideTopics.overview;
+  return `<div class="page-heading guide-heading"><div><div class="eyebrow">HƯỚNG DẪN · BÀI ${String(index).padStart(2, "0")}/${guideSequence.length}</div><h1>${e(current.title)}</h1><p>${e(current.summary)}</p></div><div class="toolbar"><button class="btn primary" type="button" data-page="${e(current.page)}">Mở chức năng: ${e(targetPage)}</button></div></div><div class="guide-layout"><article class="guide-article"><div class="guide-start"><span class="guide-start-icon">${icon("check")}</span><div><strong>Mục tiêu của bài này</strong><p>${e(current.summary)}</p></div></div><h2>Các bước thực hiện</h2><ol class="guide-steps">${current.steps.map(([title, detail], stepIndex) => `<li><span class="guide-step-number">${String(stepIndex + 1).padStart(2, "0")}</span><div><h3>${e(title)}</h3><p>${e(detail)}</p></div></li>`).join("")}</ol>${notice(`<strong>Kiểm tra trước khi tiếp tục.</strong> ${e(current.caution)}`)}<div class="guide-tip"><strong>Nếu bạn không thấy nút thao tác</strong><p>Quyền được giới hạn theo vai trò. Nhờ Admin kiểm tra vai trò tài khoản; không dùng chung tài khoản để vượt quyền.</p></div><div class="guide-navigation"><button class="btn" type="button" data-guide="${e(current.next)}">Bài tiếp theo: ${e(nextTopic.title)} ${icon("arrow")}</button><button class="btn quiet" type="button" data-page="${e(current.page)}">Mở chức năng liên quan</button></div></article><aside class="guide-sidecard"><span class="eyebrow">QUY TRÌNH CHUNG</span><h2>Thứ tự nên làm</h2><ol>${["Quy tắc tài chính", "Duyệt giá và chính sách", "Nhân sự, kỳ và chỉ tiêu", "Đơn hàng", "Thu tiền đã xác nhận", "Tính thưởng và đối soát", "Khóa snapshot, ghi nhận chi trả"].map((item, i) => `<li><span>${i + 1}</span>${e(item)}</li>`).join("")}</ol><p>Những dữ liệu đã khóa được giữ nguyên. Sau khóa, ghi nhận điều chỉnh mới có duyệt thay vì sửa kỳ cũ.</p></aside></div>`;
+}
 let renderRevision = 0;
 async function render() {
   const revision = ++renderRevision;
@@ -474,6 +642,7 @@ async function render() {
     policies: policiesView,
     integration: integrationView,
     system: systemView,
+    guide: async () => guideView(),
   };
   try {
     const content = await (views[page] || overview)();
@@ -506,6 +675,14 @@ async function action(key, node) {
   }
   if (key === "retry") {
     await start();
+    return;
+  }
+  if (key === "context-help") {
+    guideTopic = page === "guide" ? guideTopic : helpTopicForPage[page] || "overview";
+    page = "guide";
+    location.hash = "guide/" + guideTopic;
+    document.querySelector(".sidebar")?.classList.remove("open");
+    await render();
     return;
   }
   if (key === "menu") {
@@ -1149,9 +1326,19 @@ async function orderDetails(orderId) {
 document.addEventListener("click", (event) => {
   const node = event.target.closest("button");
   if (!node) return;
+  if (node.dataset.guide) {
+    guideTopic = node.dataset.guide;
+    page = "guide";
+    location.hash = "guide/" + guideTopic;
+    document.querySelector(".sidebar")?.classList.remove("open");
+    void render();
+    return;
+  }
   if (node.dataset.page) {
     page = node.dataset.page;
-    location.hash = page;
+    if (page === "guide") guideTopic = "overview";
+    location.hash = page === "guide" ? "guide/" + guideTopic : page;
+    document.querySelector(".sidebar")?.classList.remove("open");
     void render();
     return;
   }
@@ -1240,9 +1427,10 @@ document.addEventListener("submit", async (event) => {
   }
 });
 window.addEventListener("hashchange", () => {
-  const next = location.hash.slice(1) || "overview";
-  if (page !== next) {
-    page = next;
+  const next = routeFromHash();
+  if (page !== next.page || (next.page === "guide" && guideTopic !== next.topic)) {
+    page = next.page;
+    guideTopic = next.topic;
     if (state) void render();
   }
 });
