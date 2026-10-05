@@ -16,14 +16,14 @@ const hash = createHash('sha256');
 function include(path) {
   const full = join(root,path);
   if (!existsSync(full)) return;
-  if (['packages','tests','migrations','scripts','docs','data/reference'].includes(path) || path.includes('/') && !/\.[a-z]+$/i.test(path)) {
+  if (['apps','packages','tests','migrations','scripts','docs','data/reference'].includes(path) || path.includes('/') && !/\.[a-z]+$/i.test(path)) {
     for (const entry of readdirSync(full, {withFileTypes:true}).sort((a,b) => a.name < b.name ? -1 : 1)) {
       if (entry.isDirectory()) include(join(path,entry.name));
       else {hash.update(join(path,entry.name));hash.update(readFileSync(join(full,entry.name)));}
     }
   } else {hash.update(path);hash.update(readFileSync(full));}
 }
-for (const path of ['package.json','package-lock.json','tsconfig.json','eslint.config.mjs','packages','tests','migrations','scripts','docs','data/reference']) include(path);
+for (const path of ['README.md','PRODUCTION_READINESS.md','playwright.config.mjs','package.json','package-lock.json','tsconfig.json','eslint.config.mjs','apps','packages','tests','migrations','scripts','docs','data/reference']) include(path);
 const fingerprint = hash.digest('hex');
 const lastCheck = new URL('../.runtime/last-resume-check.json', import.meta.url);
 if (existsSync(lastCheck)) {

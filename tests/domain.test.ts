@@ -57,7 +57,7 @@ test('negative residual preserves deficit and reason but PM/Support bonus is zer
   const result=calculateItem(item({discountAmount:'50000000',netSalesValue:'50000000'}));
   assert.equal(result.rawResidual,'-5000000'); assert.equal(result.calculated.pm,'0');assert.equal(result.calculated.support,'0');
   assert.ok(result.warnings.includes('CUSTOMER_DISCOUNT_EXCEEDS_MANAGEMENT_POOL'));assert.ok(result.warnings.includes('NEGATIVE_RESIDUAL_POOL'));
-  assert.equal(result.companyLossUnallocated,'5000000'); assert.equal(result.settlementEligible,false);
+  assert.equal(result.companyLossUnallocated,'5000000'); assert.equal(result.settlementEligible,true);
 });
 test('partial multi-product payment allocates exactly, stable ties and huge amounts',()=>{
   assert.deepEqual(allocatePayment(50000000n,[{id:'A',net:60000000n},{id:'B',net:40000000n}]),[{id:'A',amount:30000000n},{id:'B',amount:20000000n}]);

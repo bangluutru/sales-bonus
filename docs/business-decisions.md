@@ -27,3 +27,7 @@ The user's direct decisions below override earlier design proposals. Only unreso
 - AMIS tenant read-only spike and redacted payloads still pending. Configure secrets server-side; no credentials in chat/Git.
 
 Phase 0 design and source normalization can continue independently. Production calculations and adapter implementation remain gated by unresolved financially consequential inputs under directive section 33.
+
+## Local application checkpoint — 2026-10-06
+
+The independent manual-entry application is implemented and tested. Current behavior, role boundaries, configuration choices, validation evidence and external gates are recorded in [README](../README.md), [self-review](self-review.md) and [production readiness](../PRODUCTION_READINESS.md). Earlier architecture/phase proposals do not imply that AMIS or historical sources have been verified. Local configuration explicitly selects VAT basis, recognition/expense timing and order-date snapshots; no example policy rates are activated silently.

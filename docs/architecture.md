@@ -49,3 +49,7 @@ Encrypted backups, restore drills, forward-reviewed migrations, structured redac
 ## Approved design update — 2026-10-05
 
 See [product pricing](product-pricing.md) and [calculation specification](calculation-spec.md): versioned product list prices and VAT/revenue basis; provisional 46-product quote import; negative residual keeps loss trace but zero employee incentives; Director/Admin expense and adjustment approval; temporary Support departments 60/20/20; final bonuses round upward to 1,000 VND with separate delta; post-lock refund creates warning and approved clawback referencing already-paid bonus. These direct decisions supersede earlier proposals, but unresolved source/recognition details remain gated.
+
+## Local application checkpoint — 2026-10-06
+
+The independent manual-entry application is implemented and tested. Current behavior, role boundaries, configuration choices, validation evidence and external gates are recorded in [README](../README.md), [self-review](self-review.md) and [production readiness](../PRODUCTION_READINESS.md). Earlier architecture/phase proposals do not imply that AMIS or historical sources have been verified. Local configuration explicitly selects VAT basis, recognition/expense timing and order-date snapshots; no example policy rates are activated silently.

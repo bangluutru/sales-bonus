@@ -29,3 +29,7 @@ Require stale-version checks, idempotency keys and transactional concurrency con
 ## Release controls
 
 Session expiration/revocation, CSRF controls if cookie-authenticated, secure cookies/TLS, schema validation, parameterized queries, dependency/security scan, authorization integration/E2E tests, encrypted backups, verified restore, tested migrations, redacted operational alerts and retention/access policy. Identity provider/hosting/retention periods remain deployment decisions.
+
+## Local application checkpoint — 2026-10-06
+
+The independent manual-entry application is implemented and tested. Current behavior, role boundaries, configuration choices, validation evidence and external gates are recorded in [README](../README.md), [self-review](self-review.md) and [production readiness](../PRODUCTION_READINESS.md). Earlier architecture/phase proposals do not imply that AMIS or historical sources have been verified. Local configuration explicitly selects VAT basis, recognition/expense timing and order-date snapshots; no example policy rates are activated silently.

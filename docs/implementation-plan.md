@@ -17,3 +17,7 @@ Baseline server validation/authorization accompanies each feature; Phase 7 verif
 Do not advance past a failed gate. Missing evidence must remain explicit. Phase 0 documentation is useful independent work; it does not satisfy live discovery, historical approval or production acceptance.
 
 User explicitly authorized starting build after the approved direction. Phase 1 pure contracts accept explicit scenario context for unresolved recognition/VAT choices, without enabling them as production defaults. This is a foundation checkpoint, not completion of all production phases.
+
+## Local application checkpoint — 2026-10-06
+
+The independent manual-entry application is implemented and tested. Current behavior, role boundaries, configuration choices, validation evidence and external gates are recorded in [README](../README.md), [self-review](self-review.md) and [production readiness](../PRODUCTION_READINESS.md). Earlier architecture/phase proposals do not imply that AMIS or historical sources have been verified. Local configuration explicitly selects VAT basis, recognition/expense timing and order-date snapshots; no example policy rates are activated silently.

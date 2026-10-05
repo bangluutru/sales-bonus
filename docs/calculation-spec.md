@@ -1,6 +1,6 @@
 # Calculation specification — updated 2026-10-05
 
-User-approved rules are explicit below. Unanswered recognition/source details remain pending; pure canonical domain engine now exists for explicit scenario inputs; approved historical regression and operational activation are pending.
+User-approved rules are explicit below. The local application implements manual financial workflows with mandatory explicit configuration; historical/source validation remains pending.
 
 ## Prices, VAT and named amounts
 
@@ -18,9 +18,9 @@ For R < 0, incentive base is zero: PM calculated/earned/payable incentive for th
 
 For R >= 0, configured BonusPolicy PM/Support/Company shares total exactly 100%. For negative R, financial loss/company accounting treatment is separately pending; zero employee incentive does not erase the deficit or manufacture a zero company loss. Company totals must identify negative economic residual separately.
 
-## Partial collection — pending recognition details
+## Partial collection — explicit local configuration
 
-Proposed cumulative earned entitlement = full item entitlement × cumulative eligible confirmed collection / eligible N, with period earned amount equal to closing less opening entitlement. Draft receipts earn zero; confirmed events count once. Costs timing, bonus-policy effective date and VAT allocation await B09/B12. Zero/negative denominators and overcollection require approved exceptions. Never round each payment independently.
+Configured PRO_RATA_NET cumulative earned entitlement = full item entitlement × cumulative eligible confirmed collection / eligible N, with period earned amount equal to closing less opening entitlement. Draft receipts earn zero; confirmed events count once. Local activation requires explicit PRO_RATA_WITH_COLLECTION expense timing, ORDER_DATE policy snapshot and economic VAT basis choices. Revenue basis is saved per period and collections normalized accordingly. Zero/negative denominators and overcollection require approved exceptions. Never round each payment independently.
 
 Directive example: 100m net, 70m September + 30m October; recognize corresponding portions without double counting. Examples are synthetic, not workbook evidence.
 
@@ -30,7 +30,7 @@ Use arbitrary precision minor-unit integers plus rational/decimal rates/quantiti
 
 ## Bonus rounding — APPROVED BY USER
 
-At final person/department bonus total, round a nonnegative amount upward to the nearest 1,000 VND: `rounded = 1000 × ceil(exact_total / 1000)`. Zero remains zero and exact multiples remain unchanged. Sum exact eligible lines first; do not round list prices, expenses, VAT, each order line or each payment up to 1,000. Store rounding stage, quantum, mode and delta in the policy/snapshot.
+At final person/department net bonus total after target qualification and approved adjustments, round a nonnegative amount upward to the nearest 1,000 VND: `rounded = 1000 × ceil(exact_total / 1000)`. Zero remains zero and exact multiples remain unchanged. Sum exact eligible lines first; do not round list prices, expenses, VAT, each order line or each payment up to 1,000. Store rounding stage, quantum, mode and delta in the policy/snapshot.
 
 Examples: 0 -> 0; 1 -> 1,000; 1,000 -> 1,000; 1,001 -> 2,000; exact 80,000,000/27 -> 2,963,000 if that value were a final incentive total (not a price-rounding instruction).
 
@@ -67,3 +67,9 @@ OPEN -> REVIEW -> LOCKED -> PAID as directive. REVIEW edit behavior/payout granu
 Missing identities/prices, inconsistent source economics, unapproved required rules or unsupported currency prevent settlement eligibility. Approved negative-residual zero-bonus behavior yields warning and trace, not missing-data fabrication.
 
 Implementation evidence: [domain entrypoint](../packages/domain/index.ts), [tests](../tests/domain.test.ts). Finalization quantum is caller-supplied configuration (`1000` in approved user directions), not an implicit compiler constant. Recognition and economic basis must be explicit input; no AMIS/source mapping or operational period default is selected by these functions.
+
+## Local workflow details
+
+OPEN periods require all missing targets and pending expense/adjustment reviews resolved before REVIEW. Earlier periods must be closed first. Empty periods can close; old completed orders without period activity do not create new target requirements. Negative pools are zero-incentive, warning-bearing results and may lock after acknowledgment. Payouts are evidence records, not bank transfers.
+
+Refund amount and recipient remain explicit review inputs. Before approval, Director/Admin can change the recovery and choose a later open application period. Caps compare total recovery to actual payouts of the original settlement. Negative final net entitlement blocks closure instead of guessing debt carry-forward. Ceiling is applied once after the exact offset, with netExactPayable and delta; no offset is rounded independently. Original history remains immutable.

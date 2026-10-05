@@ -35,3 +35,7 @@ Required scripts: unit, integration, e2e, golden, lint, typecheck, build, migrat
 - Catalog extraction check: 46 unique printed JANs, 46 exact quotation discount/dealer reconciliations; invalid JAN and overlapping source text flags retained. This validates source extraction only, not financial engine or historic golden values.
 
 Implemented commands: `npm run test:unit`, `npm run test:migrations`, `npm run lint`, `npm run typecheck`, `npm run build`, `npm run validate:reference`, combined `npm run check`. No Golden Dataset or browser E2E command is claimed as passing.
+
+## Local application checkpoint — 2026-10-06
+
+The independent manual-entry application is implemented and tested. Current behavior, role boundaries, configuration choices, validation evidence and external gates are recorded in [README](../README.md), [self-review](self-review.md) and [production readiness](../PRODUCTION_READINESS.md). Earlier architecture/phase proposals do not imply that AMIS or historical sources have been verified. Local configuration explicitly selects VAT basis, recognition/expense timing and order-date snapshots; no example policy rates are activated silently.
